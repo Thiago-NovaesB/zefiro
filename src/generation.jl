@@ -9,6 +9,5 @@ function evaluateEnergy!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroD
     end
     data.AEP = AEP
     data.CP = CP
-    @show data
     nothing
 end

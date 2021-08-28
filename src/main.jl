@@ -1,8 +1,5 @@
 using Base: Float64
 include("include.jl")
-include("types.jl")
-include("loadcase.jl")
-include("generation.jl")
 
 PATHCASE = "example"
 
@@ -13,3 +10,7 @@ data = zefiroData()
 load!(options,sizes,data)
 
 evaluateEnergy!(options,sizes,data)
+PCCost!(options,sizes,data)
+
+
+@show data.CAPEXrate

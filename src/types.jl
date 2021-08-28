@@ -133,6 +133,11 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
 
 @kwdef mutable struct zefiroOptions
     PATHCASE::String
+    projectManagement::Int = 0
+    legalAuthorization::Int = 0
+    surveys::Int = 0
+    engineering::Int = 0
+    contingencies::Int = 0
 end
 
 @kwdef mutable struct zefiroSizes
@@ -149,4 +154,19 @@ end
     powercurve::Array{Float64} = []
     AEP::Array{Float64} = []
     CP::Array{Float64} = []
+    CAPEX::Float64 = 0.0
+    CAPEXrate::Float64 = 0.0
+    OPEX::Float64 = 0.0
+    OPEXrate::Float64 = 0.0
+    DECOM::Float64 = 0.0
+    DECOMrate::Float64 = 0.0
+
+
+
+    
+    surveysCost::Float64 = 0.0
+    engVerifCost::Float64 = 0.0
+    baseCost::Float64 = 0.0
+    engUnitCost::Float64 = 0.0
+    IC::Float64 = 0.0
 end
