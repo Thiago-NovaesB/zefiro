@@ -138,6 +138,11 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
     surveys::Int = 0
     engineering::Int = 0
     contingencies::Int = 0
+    windTurbine::Int = 0
+    supportStructures::Int = 0
+    powerTransmissionSystem::Int = 0
+    monitoringSystem::Int = 0
+
 end
 
 @kwdef mutable struct zefiroSizes
@@ -147,26 +152,48 @@ end
 
 @kwdef mutable struct zefiroData
     turbinenames::Array{String,1} = []
-    turbinequantity::Array{Int,1} = []
+    turbineQuantity::Array{Int,1} = []
+    turbinePR::Array{Float64,1} = []
+    height::Array{Float64,1} = []
+    diameter::Array{Float64,1} = []
+    powercurve::Array{Float64} = []
+
+
+
     windnames::Array{String,1} = []
     windspeed::Array{Float64} = []
     RFwindspeed::Array{Float64} = []
-    powercurve::Array{Float64} = []
-    AEP::Array{Float64} = []
-    CP::Array{Float64} = []
-    CAPEX::Float64 = 0.0
-    CAPEXrate::Float64 = 0.0
-    OPEX::Float64 = 0.0
-    OPEXrate::Float64 = 0.0
-    DECOM::Float64 = 0.0
-    DECOMrate::Float64 = 0.0
+    onshoreDistance::Array{Float64,1} = []
+    offshoreDistance::Array{Float64,1} = []
+    surveysCost::Array{Float64,1} = []
+    vesselTimeWT::Array{Float64,1} = []
+    vesselTimeSS::Array{Float64,1} = []
+    WD::Array{Float64,1} = []
+    Ntln::Array{Int,1} = []
+    Ctln::Array{Float64,1} = []
+    Ntlf::Array{Int,1} = []
+    Ctlf::Array{Float64,1} = []
+    Cprot::Array{Float64,1} = []
 
 
 
-    
-    surveysCost::Float64 = 0.0
-    engVerifCost::Float64 = 0.0
-    baseCost::Float64 = 0.0
-    engUnitCost::Float64 = 0.0
-    IC::Float64 = 0.0
+
+
+    AEP::Array{Float64,2}
+    CP::Array{Float64,2}
+    IC::Array{Float64} = []
+    CAPEX::Array{Float64,2}
+    CAPEXrate::Array{Float64,2}
+    OPEX::Array{Float64,2}
+    OPEXrate::Array{Float64,2}
+    DECOM::Array{Float64,2}
+    DECOMrate::Array{Float64,2}
+
+
+    vesselCost::Float64 = 5.0
+    engVerifCost::Float64 = 1.0
+    baseCost::Float64 = 1.0
+    engUnitCost::Float64 = 1.0
+    scadaCost::Float64 = 1.0
+    cmsCost::Float64 = 1.0
 end

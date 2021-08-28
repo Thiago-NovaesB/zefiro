@@ -10,7 +10,6 @@ data = zefiroData()
 load!(options,sizes,data)
 
 evaluateEnergy!(options,sizes,data)
+
 PCCost!(options,sizes,data)
-
-
-@show data.CAPEXrate
+PACost!(options,sizes,data)

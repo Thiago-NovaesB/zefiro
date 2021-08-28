@@ -16,7 +16,7 @@ end
 function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
     if options.projectManagement == 0 
-        data.CAPEXrate += 0.03
+        data.CAPEXrate .+= 0.03
     else
         error("projectManagement mode not found.")
     end
@@ -25,7 +25,7 @@ end
 function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
     if options.legalAuthorization == 0 
-        data.CAPEXrate += 0.0013
+        data.CAPEXrate .+= 0.0013
     else
         error("legalAuthorization mode not found.")
     end
@@ -34,7 +34,7 @@ end
 function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     #TODO adicionar leitura do surveyCost
     if options.surveys == 0 
-        data.CAPEX += data.surveysCost
+        data.CAPEX .+= data.surveysCost
     else
         error("surveys mode not found.")
     end
@@ -43,7 +43,7 @@ end
 function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     #TODO adicionar leitura do surveyCost
     if options.engineering == 0 
-        data.CAPEX += data.engVerifCost + data.baseCost + data.engUnitCost * data.IC
+        data.CAPEX .+= transpose(data.engVerifCost .+ data.baseCost .+ data.engUnitCost .* data.IC)
     else
         error("engineering mode not found.")
     end
@@ -52,7 +52,7 @@ end
 function contingencies!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
     if options.contingencies == 0 
-        data.CAPEXrate += 0.1
+        data.CAPEXrate .+= 0.1
     else
         error("contingencies mode not found.")
     end
