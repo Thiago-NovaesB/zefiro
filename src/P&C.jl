@@ -11,6 +11,8 @@ function PCCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     engineering!(options,sizes,data)
     println("evaluating contingencies cost")
     contingencies!(options,sizes,data)
+    nothing
+
 end
 
 function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -20,6 +22,8 @@ function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefi
     else
         error("projectManagement mode not found.")
     end
+    nothing
+
 end
 
 function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -29,6 +33,8 @@ function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zef
     else
         error("legalAuthorization mode not found.")
     end
+    nothing
+
 end
 
 function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -38,6 +44,8 @@ function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     else
         error("surveys mode not found.")
     end
+    nothing
+
 end
 
 function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -47,6 +55,8 @@ function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
     else
         error("engineering mode not found.")
     end
+    nothing
+
 end
 
 function contingencies!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -56,4 +66,6 @@ function contingencies!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroDa
     else
         error("contingencies mode not found.")
     end
+    nothing
+
 end

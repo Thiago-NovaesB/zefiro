@@ -142,6 +142,11 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
     supportStructures::Int = 0
     powerTransmissionSystem::Int = 0
     monitoringSystem::Int = 0
+    port::Int = 0
+    installationOfTheComponents::Int = 0
+    commissioning::Int = 0
+    insurance::Int = 0
+
 
 end
 
@@ -157,7 +162,10 @@ end
     height::Array{Float64,1} = []
     diameter::Array{Float64,1} = []
     powercurve::Array{Float64} = []
-
+    N1d::Array{Float64,1} = []
+    Ccomp::Array{Float64,1} = []
+    Ncom::Array{Float64,1} = []
+    Lcom::Array{Float64,1} = []
 
 
     windnames::Array{String,1} = []
@@ -174,8 +182,9 @@ end
     Ntlf::Array{Int,1} = []
     Ctlf::Array{Float64,1} = []
     Cprot::Array{Float64,1} = []
-
-
+    Cport::Array{Float64,1} = []
+    Lr::Array{Float64,1} = []
+    Cins::Array{Float64,1} = []
 
 
 

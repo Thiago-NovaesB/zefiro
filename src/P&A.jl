@@ -5,8 +5,8 @@ function PACost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     windTurbine!(options,sizes,data)
     println("evaluating supportStructures cost")
     supportStructures!(options,sizes,data)
-    # println("evaluating powerTransmissionSystem cost")
-    # powerTransmissionSystem!(options,sizes,data)
+    println("evaluating powerTransmissionSystem cost")
+    powerTransmissionSystem!(options,sizes,data)
     println("evaluating monitoringSystem cost")
     monitoringSystem!(options,sizes,data)
 
@@ -24,6 +24,9 @@ function windTurbine!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
     else
         error("windTurbine mode not found.")
     end
+
+    nothing
+
 end
 
 function supportStructures!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -39,6 +42,9 @@ function supportStructures!(options::zefiroOptions,sizes::zefiroSizes,data::zefi
     else
         error("supportStructures mode not found.")
     end
+
+    nothing
+
 end
 
 function powerTransmissionSystem!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -53,6 +59,8 @@ function powerTransmissionSystem!(options::zefiroOptions,sizes::zefiroSizes,data
     else
         error("powerTransmissionSystem mode not found.")
     end
+    nothing
+
 end
 
 function monitoringSystem!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
@@ -62,4 +70,6 @@ function monitoringSystem!(options::zefiroOptions,sizes::zefiroSizes,data::zefir
     else
         error("monitoringSystem mode not found.")
     end
+    nothing
+
 end
