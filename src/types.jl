@@ -146,6 +146,8 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
     installationOfTheComponents::Int = 0
     commissioning::Int = 0
     insurance::Int = 0
+    operation::Int = 0
+    maintenance::Int = 0
 
 
 end
@@ -166,6 +168,12 @@ end
     Ccomp::Array{Float64,1} = []
     Ncom::Array{Float64,1} = []
     Lcom::Array{Float64,1} = []
+    N1dOM::Array{Float64,1} = []
+    LrOM::Array{Float64,1} = []
+    Pd::Array{Float64,1} = []
+    lambda::Array{Float64,1} = []
+    Csm::Array{Float64,1} = []
+
 
 
     windnames::Array{String,1} = []
@@ -185,6 +193,15 @@ end
     Cport::Array{Float64,1} = []
     Lr::Array{Float64,1} = []
     Cins::Array{Float64,1} = []
+    l::Array{Float64,1} = []
+    Pe::Array{Float64,1} = []
+    ComIns::Array{Float64,1} = []
+    Ctransunit::Array{Float64,1} = []
+    d::Array{Float64,1} = []
+    tc::Array{Float64,1} = []
+    Cindport::Array{Float64,1} = []
+    Cindves::Array{Float64,1} = []
+    Cindlab::Array{Float64,1} = []
 
 
 
@@ -194,9 +211,7 @@ end
     CAPEX::Array{Float64,2}
     CAPEXrate::Array{Float64,2}
     OPEX::Array{Float64,2}
-    OPEXrate::Array{Float64,2}
     DECOM::Array{Float64,2}
-    DECOMrate::Array{Float64,2}
 
 
     vesselCost::Float64 = 5.0
@@ -205,4 +220,6 @@ end
     engUnitCost::Float64 = 1.0
     scadaCost::Float64 = 1.0
     cmsCost::Float64 = 1.0
+    consumCost::Float64 = 1.0
+    duration::Int32 = 5
 end

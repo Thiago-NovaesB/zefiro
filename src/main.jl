@@ -16,3 +16,6 @@ PACost!(options,sizes,data)
 ICCost!(options,sizes,data)
 
 CAPEX!(options,sizes,data)
+
+OMCost!(options,sizes,data)
+
