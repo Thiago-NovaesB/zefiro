@@ -45,9 +45,17 @@ function loadwind!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     data.Cindves = parse.(Float64,windFile[23,2:end])
     data.Cindlab = parse.(Float64,windFile[24,2:end])
 
+    data.Cddport = parse.(Float64,windFile[25,2:end])
+    data.Nddport = parse.(Float64,windFile[26,2:end])
+    data.Lddport = parse.(Float64,windFile[27,2:end])
+    data.Nremove = parse.(Float64,windFile[28,2:end])
+    data.Vremove = parse.(Float64,windFile[29,2:end])
+    data.Asc = parse.(Float64,windFile[30,2:end])
+    data.Cscunit = parse.(Float64,windFile[31,2:end])
 
-    data.windspeed = parse.(Float64,windFile[25:end,1])
-    data.RFwindspeed = parse.(Float64,windFile[25:end,2:end])
+
+    data.windspeed = parse.(Float64,windFile[32:end,1])
+    data.RFwindspeed = parse.(Float64,windFile[32:end,2:end])
     sizes.winds = length(data.windnames)
 
 
@@ -75,13 +83,22 @@ function loadturbine!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
     data.lambda = parse.(Float64,turbineFile[13,2:end])
     data.Csm = parse.(Float64,turbineFile[14,2:end])
 
+    data.Wjproc = parse.(Float64,turbineFile[15,2:end])
+    data.Cjproc = parse.(Float64,turbineFile[16,2:end])
+    data.Wjtrans = parse.(Float64,turbineFile[17,2:end])
+    data.Wttrans = parse.(Float64,turbineFile[18,2:end])
+    data.Cjtrnas = parse.(Float64,turbineFile[19,2:end])
+    data.Wnr = parse.(Float64,turbineFile[20,2:end])
+    data.Cnr = parse.(Float64,turbineFile[21,2:end])
+    data.Wr = parse.(Float64,turbineFile[22,2:end])
+    data.SV = parse.(Float64,turbineFile[23,2:end])
 
-    windspeed = turbineFile[15:end,1]
+    windspeed = turbineFile[24:end,1]
     if parse.(Float64,windspeed) != data.windspeed
         error("wind speed is inconsistenty")
     end
 
-    powercurve = turbineFile[15:end,2:end]
+    powercurve = turbineFile[24:end,2:end]
     data.powercurve = parse.(Float64,powercurve)
     sizes.turbines = length(data.turbinenames)
 

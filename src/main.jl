@@ -18,4 +18,6 @@ ICCost!(options,sizes,data)
 CAPEX!(options,sizes,data)
 
 OMCost!(options,sizes,data)
+DDCost!(options,sizes,data)
+
 

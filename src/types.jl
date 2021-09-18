@@ -148,6 +148,10 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
     insurance::Int = 0
     operation::Int = 0
     maintenance::Int = 0
+    decommissioning::Int = 0
+    wasteManagement::Int = 0
+    siteClearance::Int = 0
+    postMonitoring::Int = 0
 
 
 end
@@ -173,6 +177,16 @@ end
     Pd::Array{Float64,1} = []
     lambda::Array{Float64,1} = []
     Csm::Array{Float64,1} = []
+
+    Wjproc::Array{Float64,1} = []
+    Cjproc::Array{Float64,1} = []
+    Wjtrans::Array{Float64,1} = []
+    Wttrans::Array{Float64,1} = []
+    Cjtrnas::Array{Float64,1} = []
+    Wnr::Array{Float64,1} = []
+    Cnr::Array{Float64,1} = []
+    Wr::Array{Float64,1} = []
+    SV::Array{Float64,1} = []
 
 
 
@@ -202,6 +216,13 @@ end
     Cindport::Array{Float64,1} = []
     Cindves::Array{Float64,1} = []
     Cindlab::Array{Float64,1} = []
+    Cddport::Array{Float64,1} = []
+    Nddport::Array{Float64,1} = []
+    Lddport::Array{Float64,1} = []
+    Nremove::Array{Float64,1} = []
+    Vremove::Array{Float64,1} = []
+    Asc::Array{Float64,1} = []
+    Cscunit::Array{Float64,1} = []
 
 
 
@@ -222,4 +243,5 @@ end
     cmsCost::Float64 = 1.0
     consumCost::Float64 = 1.0
     duration::Int32 = 5
+    postCost::Float64 = 29.3
 end

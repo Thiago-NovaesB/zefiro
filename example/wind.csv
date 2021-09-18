@@ -22,6 +22,13 @@ tc,5.5,16
 Cindport,5.5,16
 Cindves,5.5,16
 Cindlab,5.5,16
+Cddport,5.5,16
+Nddport,5.5,16
+Lddport,5.5,16
+Nremove,5.5,16
+Vremove,5.5,16
+Asc,5.5,16
+Cscunit,5.5,17
 0,0.1,0.2
 1,0.1,0.3
 2,0.1,0.1
