@@ -6,6 +6,7 @@ const year2hour = 8760
 const percent = 100
 
 include("types.jl")
+include("utils.jl")
 include("loadcase.jl")
 include("generation.jl")
 include("P&C.jl")

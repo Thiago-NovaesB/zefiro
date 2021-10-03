@@ -1,24 +1,29 @@
 #predevelopment and consenting
 
-function PCCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-    println("evaluating projectManagement cost")
-    projectManagement!(options,sizes,data)
-    println("evaluating legalAuthorization cost")
-    legalAuthorization!(options,sizes,data)
-    println("evaluating surveys cost")
-    surveys!(options,sizes,data)
-    println("evaluating engineering cost")
-    engineering!(options,sizes,data)
-    println("evaluating contingencies cost")
-    contingencies!(options,sizes,data)
+function PCCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
+    key = (options.postprocess ? "postprocessing" : "evaluating")
+    println(key*" projectManagement cost")
+    projectManagement!(options,sizes,data,output)
+    println(key*" legalAuthorization cost")
+    legalAuthorization!(options,sizes,data,output)
+    println(key*" surveys cost")
+    surveys!(options,sizes,data,output)
+    println(key*" engineering cost")
+    engineering!(options,sizes,data,output)
+    println(key*" contingencies cost")
+    contingencies!(options,sizes,data,output)
     nothing
 
 end
 
-function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.projectManagement == 0 
-        data.CAPEXrate .+= 0.03
+        if options.postprocess
+            output.projectManagement = 0.03*output.CAPEX
+        else
+            output.CAPEXrate .+= 0.03
+        end
     else
         error("projectManagement mode not found.")
     end
@@ -26,10 +31,14 @@ function projectManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefi
 
 end
 
-function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.legalAuthorization == 0 
-        data.CAPEXrate .+= 0.0013
+        if options.postprocess
+            output.legalAuthorization = 0.0013*output.CAPEX
+        else
+            output.CAPEXrate .+= 0.0013
+        end
     else
         error("legalAuthorization mode not found.")
     end
@@ -37,10 +46,14 @@ function legalAuthorization!(options::zefiroOptions,sizes::zefiroSizes,data::zef
 
 end
 
-function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-    #TODO adicionar leitura do surveyCost
+function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
     if options.surveys == 0 
-        data.CAPEX .+= data.surveysCost
+        if options.postprocess
+            nothing
+        else
+            output.CAPEX .+= data.surveysCost
+            output.surveys .+= data.surveysCost
+        end
     else
         error("surveys mode not found.")
     end
@@ -48,10 +61,14 @@ function surveys!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
 end
 
-function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-    #TODO adicionar leitura do surveyCost
+function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
     if options.engineering == 0 
-        data.CAPEX .+= transpose(data.engVerifCost .+ data.baseCost .+ data.engUnitCost .* data.IC)
+        if options.postprocess
+            nothing
+        else
+            output.CAPEX .+= transpose(data.engVerifCost .+ data.baseCost .+ data.engUnitCost .* data.IC)
+            output.engineering .+= transpose(data.engVerifCost .+ data.baseCost .+ data.engUnitCost .* data.IC)
+        end
     else
         error("engineering mode not found.")
     end
@@ -59,10 +76,14 @@ function engineering!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
 
 end
 
-function contingencies!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function contingencies!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.contingencies == 0 
-        data.CAPEXrate .+= 0.1
+        if options.postprocess
+            output.contingencies = 0.1*output.CAPEX
+        else
+            output.CAPEXrate .+= 0.1
+        end
     else
         error("contingencies mode not found.")
     end

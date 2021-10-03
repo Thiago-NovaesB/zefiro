@@ -1,25 +1,31 @@
 #predevelopment and consenting
 
-function OMCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-    println("evaluating operation cost")
-    operation!(options,sizes,data)
-    println("evaluating maintenance cost")
-    maintenance!(options,sizes,data)
+function OMCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
+    key = (options.postprocess ? "postprocessing" : "evaluating")
+    println(key*" operation cost")
+    operation!(options,sizes,data,output)
+    println(key*" maintenance cost")
+    maintenance!(options,sizes,data,output)
     nothing
 
 end
 
-function operation!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function operation!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.operation == 0 
-        Crent = (data.l .* data.Pe) .* data.AEP * data.duration
-        CinsO = zeros(sizes.winds,sizes.turbines)
-        CtransO = zeros(sizes.winds,sizes.turbines)
-        for i in 1:sizes.winds,j in 1:sizes.turbines
-            CinsO[i,j] += data.ComIns[i] + data.IC[j]
-            CtransO[i,j] += data.Ctransunit[i] + data.IC[j]
+        if options.postprocess
+            nothing
+        else
+            Crent = (data.l .* data.Pe) .* output.AEP * data.duration
+            CinsO = zeros(sizes.winds,sizes.turbines)
+            CtransO = zeros(sizes.winds,sizes.turbines)
+            for i in 1:sizes.winds,j in 1:sizes.turbines
+                CinsO[i,j] += data.ComIns[i] + data.IC[j]
+                CtransO[i,j] += data.Ctransunit[i] + data.IC[j]
+            end
+            output.OPEX += Crent + CinsO + CtransO
+            output.operation += Crent + CinsO + CtransO
         end
-        data.OPEX += Crent + CinsO + CtransO
     else
         error("operation mode not found.")
     end
@@ -27,25 +33,29 @@ function operation!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
 end
 
-function maintenance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function maintenance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.maintenance == 0 
-        Ccm = zeros(sizes.winds,sizes.turbines)
-        Cmdir = zeros(sizes.winds,sizes.turbines)
-        Cmind = zeros(sizes.winds,sizes.turbines)
+        if options.postprocess
+            nothing
+        else
+            Ccm = zeros(sizes.winds,sizes.turbines)
+            Cmdir = zeros(sizes.winds,sizes.turbines)
+            Cmind = zeros(sizes.winds,sizes.turbines)
 
-        Ctrans = 2*(data.d .* data.tc) 
-        Clab = data.N1dOM .* data.LrOM 
-        Ccm .+= Ctrans .+ transpose(Clab) .+ data.consumCost
+            Ctrans = 2*(data.d .* data.tc) 
+            Clab = data.N1dOM .* data.LrOM 
+            Ccm .+= Ctrans .+ transpose(Clab) .+ data.consumCost
 
-        for i in 1:sizes.winds,j in 1:sizes.turbines
-            Cmdir[i,j] = (1-data.Pd[j])*data.lambda[j]*Ccm[i,j] + data.Pd[j]*data.Csm[j]
+            for i in 1:sizes.winds,j in 1:sizes.turbines
+                Cmdir[i,j] = (1-data.Pd[j])*data.lambda[j]*Ccm[i,j] + data.Pd[j]*data.Csm[j]
+            end
+
+            Cmind .+= data.Cindport + data.Cindves + data.Cindlab
+
+            output.OPEX += Cmdir + Cmind
+            output.maintenance += Cmdir + Cmind
         end
-
-        Cmind .+= data.Cindport + data.Cindves + data.Cindlab
-
-        data.OPEX += Cmdir + Cmind
-
     else
         error("maintenance mode not found.")
     end

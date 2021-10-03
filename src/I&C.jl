@@ -1,23 +1,29 @@
 #production and acquisition
 
-function ICCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-    println("evaluating port cost")
-    port!(options,sizes,data)
-    println("evaluating installationOfTheComponents cost")
-    installationOfTheComponents!(options,sizes,data)
-    println("evaluating commissioning cost")
-    commissioning!(options,sizes,data)
-    println("evaluating insurance cost")
-    insurance!(options,sizes,data)
+function ICCost!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
+    key = (options.postprocess ? "postprocessing" : "evaluating")
+    println(key*" port cost")
+    port!(options,sizes,data,output)
+    println(key*" installationOfTheComponents cost")
+    installationOfTheComponents!(options,sizes,data,output)
+    println(key*" commissioning cost")
+    commissioning!(options,sizes,data,output)
+    println(key*" insurance cost")
+    insurance!(options,sizes,data,output)
 
     nothing
 end
 
-function port!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function port!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.port == 0 
-        for i in 1:sizes.winds,j in 1:sizes.turbines
-            data.CAPEX[i,j] += data.Cport[i] + data.N1d[j]*data.Lr[i]
+        if options.postprocess
+            nothing
+        else
+            for i in 1:sizes.winds,j in 1:sizes.turbines
+                output.CAPEX[i,j] += data.Cport[i] + data.N1d[j]*data.Lr[i]
+                output.port[i,j] += data.Cport[i] + data.N1d[j]*data.Lr[i]
+            end
         end
     else
         error("port mode not found.")
@@ -26,10 +32,15 @@ function port!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
 
 end
 
-function installationOfTheComponents!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function installationOfTheComponents!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.installationOfTheComponents == 0 
-        data.CAPEX .+= transpose(data.Ccomp)
+        if options.postprocess
+            nothing
+        else
+            output.CAPEX .+= transpose(data.Ccomp)
+            output.installationOfTheComponents .+= transpose(data.Ccomp)
+        end
     else
         error("installationOfTheComponents mode not found.")
     end
@@ -37,10 +48,15 @@ function installationOfTheComponents!(options::zefiroOptions,sizes::zefiroSizes,
 
 end
 
-function commissioning!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function commissioning!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.commissioning == 0 
-        data.CAPEX .+= transpose(data.Lcom.*data.Ncom)
+        if options.postprocess
+            nothing
+        else
+            output.CAPEX .+= transpose(data.Lcom.*data.Ncom)
+            output.commissioning .+= transpose(data.Lcom.*data.Ncom)
+        end
     else
         error("commissioning mode not found.")
     end
@@ -48,11 +64,16 @@ function commissioning!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroDa
 
 end
 
-function insurance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function insurance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
 
     if options.insurance == 0 
-        for i in 1:sizes.winds,j in 1:sizes.turbines
-            data.CAPEX[i,j] += data.Cins[i] + data.IC[j]
+        if options.postprocess
+            nothing
+        else
+            for i in 1:sizes.winds,j in 1:sizes.turbines
+                output.CAPEX[i,j] += data.Cins[i] + data.IC[j]
+                output.insurance[i,j] += data.Cins[i] + data.IC[j]
+            end
         end
     else
         error("insurance mode not found.")

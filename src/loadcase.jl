@@ -1,21 +1,21 @@
-function load!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function load!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
     println("loading wind data")
-    loadwind!(options,sizes,data)
+    loadwind!(options,sizes,data,output)
     println("wind data loaded")
 
     println("loading turbine data")
-    loadturbine!(options,sizes,data)
+    loadturbine!(options,sizes,data,output)
     println("turbine data loaded")
 
     println("initialize! data")
-    initialize!(options,sizes,data)
+    initialize!(options,sizes,data,output)
     println("initialize! loaded")
 
     nothing
 end
 
 
-function loadwind!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function loadwind!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
     windPath = joinpath(options.PATHCASE,"wind.csv")
     windFile = CSV.File(windPath,header=0) |> Tables.matrix
 
@@ -62,7 +62,7 @@ function loadwind!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
     nothing
 end
 
-function loadturbine!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
+function loadturbine!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output::zefiroOutput)
     turbinePath = joinpath(options.PATHCASE,"turbines.csv")
     turbineFile = CSV.File(turbinePath,header=0) |> Tables.matrix
 
@@ -105,19 +105,3 @@ function loadturbine!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
     nothing
 end
 
-function initialize!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-
-    data.CAPEX = zeros(sizes.winds,sizes.turbines)
-    data.CAPEXrate = zeros(sizes.winds,sizes.turbines)
-    data.OPEX = zeros(sizes.winds,sizes.turbines)
-    data.DECOM = zeros(sizes.winds,sizes.turbines)
-
-    data.IC = data.turbinePR.*data.turbineQuantity
-    nothing
-end
-
-function CAPEX!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData)
-
-    data.CAPEX = data.CAPEX./(1 .-data.CAPEXrate )
-    nothing
-end

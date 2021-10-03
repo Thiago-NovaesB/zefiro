@@ -1,0 +1,6 @@
+O CAPEX de wind1/turbine1 foi 3.1684533963023324e7
+O CAPEX de wind1/turbine2 foi 3.0742154874190398e7
+O CAPEX de wind1/turbine3 foi 2.6780481202602156e7
+O CAPEX de wind2/turbine1 foi 3.320024550991408e7
+O CAPEX de wind2/turbine2 foi 3.2257797653055374e7
+O CAPEX de wind2/turbine3 foi 2.814518368908357e7

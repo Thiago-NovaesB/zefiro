@@ -153,6 +153,8 @@ kwdef_val(::Type{Array{T,N}}) where {T,N} = Array{T}(undef, zeros(Int,N)...)
     siteClearance::Int = 0
     postMonitoring::Int = 0
 
+    postprocess::Bool = false
+
 
 end
 
@@ -224,16 +226,7 @@ end
     Asc::Array{Float64,1} = []
     Cscunit::Array{Float64,1} = []
 
-
-
-    AEP::Array{Float64,2}
-    CP::Array{Float64,2}
     IC::Array{Float64} = []
-    CAPEX::Array{Float64,2}
-    CAPEXrate::Array{Float64,2}
-    OPEX::Array{Float64,2}
-    DECOM::Array{Float64,2}
-
 
     vesselCost::Float64 = 5.0
     engVerifCost::Float64 = 1.0
@@ -244,4 +237,42 @@ end
     consumCost::Float64 = 1.0
     duration::Int32 = 5
     postCost::Float64 = 29.3
+end
+
+
+@kwdef mutable struct zefiroOutput
+    projectManagement::Array{Float64,2}
+    legalAuthorization::Array{Float64,2}
+    surveys::Array{Float64,2}
+    engineering::Array{Float64,2}
+    contingencies::Array{Float64,2}
+    windTurbine::Array{Float64,2}
+    supportStructures::Array{Float64,2}
+    powerTransmissionSystem::Array{Float64,2}
+    monitoringSystem::Array{Float64,2}
+    port::Array{Float64,2}
+    installationOfTheComponents::Array{Float64,2}
+    commissioning::Array{Float64,2}
+    insurance::Array{Float64,2}
+    operation::Array{Float64,2}
+    maintenance::Array{Float64,2}
+    decommissioning::Array{Float64,2}
+    wasteManagement::Array{Float64,2}
+    siteClearance::Array{Float64,2}
+    postMonitoring::Array{Float64,2}
+
+    P_C::Array{Float64,2}
+    P_A::Array{Float64,2}
+    O_M::Array{Float64,2}
+    I_C::Array{Float64,2}
+    D_D::Array{Float64,2}
+
+    LCOE::Array{Float64,2}
+
+    AEP::Array{Float64,2}
+    CP::Array{Float64,2}
+    CAPEX::Array{Float64,2}
+    CAPEXrate::Array{Float64,2}
+    OPEX::Array{Float64,2}
+    DECOM::Array{Float64,2}
 end
