@@ -1,6 +1,6 @@
-O CAPEX de wind1/turbine1 foi 3.1684533963023324e7
-O CAPEX de wind1/turbine2 foi 3.0742154874190398e7
-O CAPEX de wind1/turbine3 foi 2.6780481202602156e7
-O CAPEX de wind2/turbine1 foi 3.320024550991408e7
-O CAPEX de wind2/turbine2 foi 3.2257797653055374e7
-O CAPEX de wind2/turbine3 foi 2.814518368908357e7
+O LCOE de wind0/turbine0 foi 486.4336116769959
+O LCOE de wind0/turbine1 foi 361.0614548778621
+O LCOE de wind0/turbine2 foi 263.0387121454871
+O LCOE de wind1/turbine0 foi 593.5890282432039
+O LCOE de wind1/turbine1 foi 341.0080417906432
+O LCOE de wind1/turbine2 foi 250.49149289796821

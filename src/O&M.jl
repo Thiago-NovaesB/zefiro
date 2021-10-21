@@ -16,12 +16,12 @@ function operation!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,o
         if options.postprocess
             nothing
         else
-            Crent = (data.l .* data.Pe) .* output.AEP * data.duration
+            Crent = (data.l .* data.Pe) .* output.AEP * data.duration .* transpose(data.turbineQuantity)
             CinsO = zeros(sizes.winds,sizes.turbines)
             CtransO = zeros(sizes.winds,sizes.turbines)
             for i in 1:sizes.winds,j in 1:sizes.turbines
-                CinsO[i,j] += data.ComIns[i] + data.IC[j]
-                CtransO[i,j] += data.Ctransunit[i] + data.IC[j]
+                CinsO[i,j] += data.ComIns[i] * data.IC[j]
+                CtransO[i,j] += data.Ctransunit[i] * data.IC[j]
             end
             output.OPEX += Crent + CinsO + CtransO
             output.operation += Crent + CinsO + CtransO
@@ -51,7 +51,7 @@ function maintenance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData
                 Cmdir[i,j] = (1-data.Pd[j])*data.lambda[j]*Ccm[i,j] + data.Pd[j]*data.Csm[j]
             end
 
-            Cmind .+= data.Cindport + data.Cindves + data.Cindlab
+            Cmind .+= (data.Cindport + data.Cindves + data.Cindlab).*transpose(data.turbineQuantity)
 
             output.OPEX += Cmdir + Cmind
             output.maintenance += Cmdir + Cmind

@@ -21,8 +21,8 @@ function port!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output
             nothing
         else
             for i in 1:sizes.winds,j in 1:sizes.turbines
-                output.CAPEX[i,j] += data.Cport[i] + data.N1d[j]*data.Lr[i]
-                output.port[i,j] += data.Cport[i] + data.N1d[j]*data.Lr[i]
+                output.CAPEX[i,j] += (data.Cport[i] + data.N1d[j]*data.Lr[i])*data.turbineQuantity[j]
+                output.port[i,j] += (data.Cport[i] + data.N1d[j]*data.Lr[i])*data.turbineQuantity[j]
             end
         end
     else
@@ -38,8 +38,8 @@ function installationOfTheComponents!(options::zefiroOptions,sizes::zefiroSizes,
         if options.postprocess
             nothing
         else
-            output.CAPEX .+= transpose(data.Ccomp)
-            output.installationOfTheComponents .+= transpose(data.Ccomp)
+            output.CAPEX .+= transpose(data.Ccomp).*transpose(data.turbineQuantity)
+            output.installationOfTheComponents .+= transpose(data.Ccomp).*transpose(data.turbineQuantity)
         end
     else
         error("installationOfTheComponents mode not found.")
@@ -54,8 +54,8 @@ function commissioning!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroDa
         if options.postprocess
             nothing
         else
-            output.CAPEX .+= transpose(data.Lcom.*data.Ncom)
-            output.commissioning .+= transpose(data.Lcom.*data.Ncom)
+            output.CAPEX .+= transpose(data.Lcom.*data.Ncom).*transpose(data.turbineQuantity)
+            output.commissioning .+= transpose(data.Lcom.*data.Ncom).*transpose(data.turbineQuantity)
         end
     else
         error("commissioning mode not found.")
@@ -71,8 +71,8 @@ function insurance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,o
             nothing
         else
             for i in 1:sizes.winds,j in 1:sizes.turbines
-                output.CAPEX[i,j] += data.Cins[i] + data.IC[j]
-                output.insurance[i,j] += data.Cins[i] + data.IC[j]
+                output.CAPEX[i,j] += data.Cins[i]*data.IC[j]
+                output.insurance[i,j] += data.Cins[i]*data.IC[j]
             end
         end
     else

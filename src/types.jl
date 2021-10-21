@@ -228,15 +228,16 @@ end
 
     IC::Array{Float64} = []
 
-    vesselCost::Float64 = 5.0
-    engVerifCost::Float64 = 1.0
-    baseCost::Float64 = 1.0
-    engUnitCost::Float64 = 1.0
-    scadaCost::Float64 = 1.0
-    cmsCost::Float64 = 1.0
-    consumCost::Float64 = 1.0
-    duration::Int32 = 5
-    postCost::Float64 = 29.3
+    vesselCost::Float64 = 10000.0
+    engVerifCost::Float64 = 8000.0
+    baseCost::Float64 = 8000.0
+    engUnitCost::Float64 = 20000.0
+    scadaCost::Float64 = 250000
+    cmsCost::Float64 = 250000
+    consumCost::Float64 = 20000
+    duration::Int32 = 20
+    postCost::Float64 = 3600000
+    r::Float64 = 0.1
 end
 
 

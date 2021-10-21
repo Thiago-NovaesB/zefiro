@@ -65,6 +65,17 @@ function LCOE!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,output
     output.O_M = output.operation + output.maintenance
     output.D_D = output.decommissioning + output.wasteManagement + output.siteClearance + output.postMonitoring
 
+    numerador = 0.34*output.P_C +
+                (0.02*output.P_C + 0.001*output.P_A+ 0.0165*output.I_C)./(1+data.r) + 
+                (0.02*output.P_C + 0.163*output.P_A+ 0.0165*output.I_C)./(1+data.r)^2 + 
+                (0.215*output.P_C + 0.373*output.P_A+ 0.325*output.I_C)./(1+data.r)^3 + 
+                (0.40*output.P_C + 0.434*output.P_A+ 0.614*output.I_C)./(1+data.r)^4 + 
+                (0.005*output.P_C + 0.029*output.P_A+ 0.028*output.I_C)./(1+data.r)^5 +
+                sum(output.O_M./(1+data.r)^i for i in 12:25) +
+                output.D_D./(1+data.r)^26
+    denominator = sum(output.AEP./(1+data.r)^i for i in 6:25)
+
+    output.LCOE = numerador./ denominator
     nothing
 end
 
@@ -73,7 +84,7 @@ function output!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroData,outp
     file = open(options.PATHCASE*"/output.txt", "w")
 
     for w in 1:sizes.winds, t in 1:sizes.turbines
-        line = "O CAPEX de "*data.windnames[w]*"/"*data.turbinenames[t]*" foi "*string(output.CAPEX[w,t])
+        line = "O LCOE de "*data.windnames[w]*"/"*data.turbinenames[t]*" foi "*string(output.LCOE[w,t])
 
         println(line)
         write(file,line*"\n")

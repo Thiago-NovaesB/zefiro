@@ -20,8 +20,8 @@ function decommissioning!(options::zefiroOptions,sizes::zefiroSizes,data::zefiro
         if options.postprocess
             nothing
         else
-            CDDport = data.Cddport + data.Nddport .* data.Lddport
-            Cremov = data.Nremove .* data.Vremove
+            CDDport = (data.Cddport + data.Nddport .* data.Lddport).*transpose(data.turbineQuantity)
+            Cremov = (data.Nremove .* data.Vremove).*transpose(data.turbineQuantity)
             output.DECOM .+= CDDport + Cremov
             output.decommissioning .+= CDDport + Cremov
         end
@@ -42,8 +42,8 @@ function wasteManagement!(options::zefiroOptions,sizes::zefiroSizes,data::zefiro
             Cwtrans = data.Wjtrans .* data.Cjproc ./ data.Wttrans 
             Cland = data.Wnr .* data.Cnr 
             Csv = data.Wr .* data.SV 
-            output.DECOM .+= transpose(Cwproc + Cwtrans + Cland - Csv)
-            output.wasteManagement .+= transpose(Cwproc + Cwtrans + Cland - Csv)
+            output.DECOM .+= transpose(Cwproc + Cwtrans + Cland - Csv).*transpose(data.turbineQuantity)
+            output.wasteManagement .+= transpose(Cwproc + Cwtrans + Cland - Csv).*transpose(data.turbineQuantity)
         end
     else
         error("wasteManagement mode not found.")
@@ -58,8 +58,8 @@ function siteClearance!(options::zefiroOptions,sizes::zefiroSizes,data::zefiroDa
         if options.postprocess
             nothing
         else
-            output.DECOM .+= data.Asc.*data.Cscunit
-            output.siteClearance .+= data.Asc.*data.Cscunit
+            output.DECOM .+= data.Asc.*data.Cscunit.*transpose(data.turbineQuantity)
+            output.siteClearance .+= data.Asc.*data.Cscunit.*transpose(data.turbineQuantity)
         end
     else
         error("siteClearance mode not found.")
